@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1959: Machine Learning - La Frontera del Conocimiento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'Soviet';
+            src: local('Courier New'), local('Consolas'), local('monospace');
+        }
+
+        @font-face {
+            font-family: 'Brutalist';
+            src: local('Arial Black'), local('Impact'), local('sans-serif');
+        }
+
+        body {
+            font-family: 'Soviet', 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #33ff33;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .game-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6) contrast(1.2) sepia(0.3);
+            z-index: 0;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0.4) 0%,
+                rgba(0, 20, 0, 0.2) 50%,
+                rgba(0, 0, 0, 0.6) 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .scan-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.3) 2px,
+                rgba(0, 0, 0, 0.3) 4px
+            );
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .title-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(180deg, #1a1a1a 0%, transparent 100%);
+            border-bottom: 3px solid #33ff33;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 10;
+        }
+
+        .title-bar h1 {
+            font-family: 'Brutalist', 'Arial Black', sans-serif;
+            font-size: 28px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #33ff33;
+            text-shadow: 0 0 10px #33ff33, 0 0 20px #33ff33;
+        }
+
+        .stats-panel {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 10px 20px;
+            border: 2px solid #33ff33;
+            background: rgba(0, 40, 0, 0.8);
+        }
+
+        .stat-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #22aa22;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #33ff33;
+        }
+
+        .main-area {
+            position: absolute;
+            top: 100px;
+            left: 40px;
+            right: 40px;
+            bottom: 120px;
+            z-index: 5;
+        }
+
+        .puzzle-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .puzzle-zone {
+            background: rgba(0, 30, 0, 0.7);
+            border: 3px solid #22aa22;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .puzzle-zone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(180deg, #22aa22 0%, transparent 100%);
+        }
+
+        .zone-title {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #0a0a0a;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .zone-content {
+            margin-top: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .draggable-item {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #1a3a1a 0%, #0d200d 100%);
+            border: 2px solid #33ff33;
+            color: #33ff33;
+            font-size: 14px;
+            cursor: grab;
+            margin: 10px;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            user-select: none;
+        }
+
+        .draggable-item::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 10px;
+            height: 10px;
+            background: #33ff33;
+            border-radius: 50%;
+        }
+
+        .draggable-item:hover {
+            background: linear-gradient(135deg, #2a5a2a 0%, #1a3a1a 100%);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+
+        .draggable-item.dragging {
+            opacity: 0.5;
+            transform: scale(1.1);
+        }
+
+        .drop-zone {
+            min-height: 150px;
+            border: 2px dashed #22aa22;
+            background: rgba(0, 20, 0, 0.5);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.highlight {
+            border-color: #33ff33;
+            background: rgba(51, 255, 51, 0.1);
+            box-shadow: 0 0 30px rgba(51, 255, 51, 0.3);
+        }
+
+        .drop-zone.correct {
+            border-color: #ffff00;
+            background: rgba(255, 255, 0, 0.1);
+        }
+
+        .drop-zone.incorrect {
+            border-color: #ff3333;
+            background: rgba(255, 51, 51, 0.1);
+        }
+
+        .info-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 40px;
+            right: 40px;
+            height: 80px;
+            background: rgba(10, 10, 10, 0.9);
+            border: 2px solid #33ff33;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            gap: 30px;
+            z-index: 10;
+        }
+
+        .info-text {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #22aa22;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 20px;
+            background: #0a0a0a;
+            border: 2px solid #33ff33;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22aa22 0%, #33ff33 100%);
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: #0a0a0a;
+        }
+
+        .keyboard-hint {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .key {
+            padding: 8px 15px;
+            background: #1a1a1a;
+            border: 2px solid #33ff33;
+            font-size: 12px;
+            color: #33ff33;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .key:hover {
+            background: #33ff33;
+            color: #0a0a0a;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 4px solid #33ff33;
+            padding: 40px;
+            max-width: 700px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(51, 255, 51, 0.5);
+        }
+
+        .modal h2 {
+            font-family: 'Brutalist', 'Arial Black', sans-serif;
+            font-size: 36px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            color: #33ff33;
+            text-shadow: 0 0 20px #33ff33;
+        }
+
+        .modal p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #22aa22;
+            margin-bottom: 30px;
+        }
+
+        .modal button {
+            padding: 15px 40px;
+            background: transparent;
+            border: 3px solid #33ff33;
+            color: #33ff33;
+            font-family: 'Brutalist', sans-serif;
+            font-size: 18px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal button:hover {
+            background: #33ff33;
+            color: #0a0a0a;
+        }
+
+        .clock {
+            position: absolute;
+            top: 100px;
+            right: 40px;
+            width: 150px;
+            height: 150px;
+            border: 4px solid #33ff33;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 20, 0, 0.8);
+            z-index: 10;
+        }
+
+        .clock-inner {
+            width: 120px;
+            height: 120px;
+            border: 2px solid #22aa22;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .clock-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            background: #33ff33;
+        }
+
+        .clock-hand.hour {
+            width: 4px;
+            height: 40px;
+            margin-left: -2px;
+        }
+
+        .clock-hand.minute {
+            width: 2px;
+            height: 55px;
+            margin-left: -1px;
+        }
+
+        .clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: #33ff33;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .clock-label {
+            position: absolute;
+            bottom: -40px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #22aa22;
+        }
+
+        .question-box {
+            background: rgba(0, 40, 0, 0.9);
+            border: 3px solid #ffff00;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .question-box h3 {
+            color: #ffff00;
+            margin-bottom: 15px;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: transparent;
+            border: 2px solid #22aa22;
+            color: #33ff33;
+            font-family: 'Soviet', monospace;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            background: rgba(51, 255, 51, 0.2);
+            border-color: #33ff33;
+        }
+
+        .option-btn.correct {
+            background: rgba(51, 255, 51, 0.3);
+            border-color: #33ff33;
+        }
+
+        .option-btn.incorrect {
+            background: rgba(255, 51, 51, 0.3);
+            border-color: #ff3333;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #22aa22;
+        }
+
+        .timeline-point {
+            position: relative;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .timeline-point::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #33ff33;
+            border-radius: 50%;
+            border: 3px solid #0a0a0a;
+        }
+
+        .timeline-year {
+            font-size: 12px;
+            color: #33ff33;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
+        .timeline-label {
+            font-size: 10px;
+            color: #22aa22;
+            margin-top: 5px;
+            max-width: 80px;
+        }
+
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .flash {
+            animation: flash 0.1s;
+        }
+
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .floating-text {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            color: #33ff33;
+            text-shadow: 0 0 10px #33ff33;
+            pointer-events: none;
+            animation: floatUp 2s forwards;
+            z-index: 50;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-100px); }
+        }
+
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100%;
+            font-size: 14px;
+            color: #22aa22;
+            opacity: 0.3;
+            animation: matrixFall linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes matrixFall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(250vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <img src="imgs/bg_1959.png" alt="1959 Cold War Computing" class="background-image">
+
+        <div class="overlay"></div>
+        <div class="scan-lines"></div>
+
+        <div class="matrix-rain" id="matrixRain"></div>
+
+        <div class="title-bar">
+            <h1>1959: MACHINE LEARNING</h1>
+            <div class="stats-panel">
+                <div class="stat">
+                    <div class="stat-label">NIVEL</div>
+                    <div class="stat-value" id="level">01</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">PUNTOS</div>
+                    <div class="stat-value" id="score">0000</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">TIEMPO</div>
+                    <div class="stat-value" id="time">09:59</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clock" id="clock">
+            <div class="clock-inner">
+                <div class="clock-hand hour" id="hourHand"></div>
+                <div class="clock-hand minute" id="minuteHand"></div>
+                <div class="clock-center"></div>
+            </div>
+            <div class="clock-label">AÑO 1959</div>
+        </div>
+
+        <div class="main-area">
+            <div class="puzzle-area" id="puzzleArea">
+                <div class="puzzle-zone" id="zone1">
+                    <div class="zone-title">CONCEPTOS HISTÓRICOS</div>
+                    <div class="zone-content">
+                        <div class="drop-zone" id="dropZone1" data-accepts="concept"></div>
+                    </div>
+                </div>
+                <div class="puzzle-zone" id="zone2">
+                    <div class="zone-title">PERSONAJES CLAVE</div>
+                    <div class="zone-content">
+                        <div class="drop-zone" id="dropZone2" data-accepts="person"></div>
+                    </div>
+                </div>
+                <div class="puzzle-zone" id="zone3">
+                    <div class="zone-title">CONCEPTOS ML</div>
+                    <div class="zone-content">
+                        <div id="conceptCards" class="draggable-item" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                        </div>
+                    </div>
+                </div>
+                <div class="puzzle-zone" id="zone4">
+                    <div class="zone-title">PERSONAJES</div>
+                    <div class="zone-content">
+                        <div id="personCards" class="draggable-item" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-text" id="infoText">
+                Bienvenido al año 1959. La Guerra Fría está en su momento más crítico.
+                Estados Unidos y la Unión Soviética compiten por dominar la inteligencia artificial.
+                Clasifica los conceptos y personajes arrastrándolos a las zonas correctas.
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+            <div class="keyboard-hint">
+                <button class="key" onclick="showHint()">PISTA</button>
+                <button class="key" onclick="showHistoricalInfo()">INFO</button>
+            </div>
+        </div>
+
+        <div class="modal" id="introModal">
+            <div class="modal-content">
+                <h2>1959: MACHINE LEARNING</h2>
+                <p>
+                    Bienvenido a la era donde todo comenzó. En 1959, Arthur Samuel escribió el primer programa
+                    de aprendizaje automático en IBM. La Guerra Fría impulsa la carrera computacional.
+                    Perceptrones, redes neuronales primitivas y las primeras máquinas de aprendizaje
+                    están transformando el mundo.
+                </p>
+                <p>
+                    <strong>Misión:</strong> Clasifica correctamente los conceptos y personajes arrastrando
+                    las tarjetas a las zonas correctas. Demuestra tu conocimiento sobre la historia
+                    de la inteligencia artificial.
+                </p>
+                <button onclick="startGame()">INICIAR MISIÓN</button>
+            </div>
+        </div>
+
+        <div class="modal" id="levelCompleteModal">
+            <div class="modal-content">
+                <h2>NIVEL COMPLETADO</h2>
+                <p id="levelCompleteText"></p>
+                <button onclick="nextLevel()">CONTINUAR</button>
+            </div>
+        </div>
+
+        <div class="modal" id="infoModal">
+            <div class="modal-content">
+                <h2>CONTEXTO HISTÓRICO</h2>
+                <div id="infoModalContent" style="text-align: left; max-height: 400px; overflow-y: auto;"></div>
+                <button onclick="closeInfoModal()">CERRAR</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gameData = {
+            concepts: [
+                { id: 'ml', text: 'MACHINE LEARNING', type: 'concept', correctZone: 1 },
+                { id: 'perceptron', text: 'PERCEPTRÓN', type: 'concept', correctZone: 1 },
+                { id: 'pattern', text: 'RECONOCIMIENTO DE PATRONES', type: 'concept', correctZone: 1 },
+                { id: 'heuristic', text: 'PROGRAMACIÓN HEURÍSTICA', type: 'concept', correctZone: 1 },
+                { id: 'samuel', text: 'ARTHUR SAMUEL', type: 'person', correctZone: 2 },
+                { id: 'minsky', text: 'MARVIN MINSKY', type: 'person', correctZone: 2 },
+                { id: 'mcclulloch', text: 'WARREN MCCULLOCH', type: 'person', correctZone: 2 },
+                { id: 'rosenblatt', text: 'FRANK ROSENBLATT', type: 'person', correctZone: 2 }
+            ],
+            questions: [
+                {
+                    question: '¿En qué año Arthur Samuel acuñó el término "Machine Learning"?',
+                    options: ['1950', '1959', '1965', '1970'],
+                    correct: 1
+                },
+                {
+                    question: '¿Qué evento marcó el inicio de la investigación en redes neuronales?',
+                    options: [
+                        'Creación del transistor',
+                        'Paper de McCulloch-Pitts (1943)',
+                        'Lanzamiento de Sputnik',
+                        'Fin de la Guerra Fría'
+                    ],
+                    correct: 1
+                },
+                {
+                    question: '¿Cuál fue el objetivo principal del proyecto Perceptron de Rosenblatt?',
+                    options: [
+                        'Crear un cerebro artificial completo',
+                        'Simular el aprendizaje biológico',
+                        'Desarrollar ajedrez computacional',
+                        'Construir una máquina de traducir'
+                    ],
+                    correct: 1
+                },
+                {
+                    question: '¿Por qué la Guerra Fría aceleró el desarrollo de la IA?',
+                    options: [
+                        'Por tratado internacional de cooperación',
+                        'Por competencia militar y de vigilancia',
+                        'Por intercambio cultural',
+                        'Por competencia deportiva'
+                    ],
+                    correct: 1
+                },
+                {
+                    question: '¿Qué limitaciones tenía el perceptrón según Minsky y Papert (1969)?',
+                    options: [
+                        'Era demasiado rápido',
+                        'No podía resolver problemas no lineales',
+                        'Consumía demasiada energía',
+                        'Era muy caro de fabricar'
+                    ],
+                    correct: 1
+                }
+            ],
+            historicalFacts: [
+                {
+                    title: 'Arthur Samuel y el Primer Programa de ML',
+                    text: 'En 1959, Arthur Samuel creó un programa de damas en IBM que aprendía de sus errores. Este fue considerado el primer programa de machine learning, marcando el inicio de una nueva era en la computación.'
+                },
+                {
+                    title: 'El Perceptrón de Rosenblatt',
+                    text: 'Frank Rosenblatt desarrolló el perceptrón en 1958, inspirado en la estructura del cerebro humano. Era una máquina física que simulaba una neurona artificial, capaz de aprender de ejemplos.'
+                },
+                {
+                    title: 'La Guerra Fría Tecnológica',
+                    text: 'La competencia entre USA y USSR impulsó inversiones masivas en computación. Ambos bandos buscaban superiority tecnológica para vigilancia, criptografía y predicción de amenazas.'
+                },
+                {
+                    title: 'Marvin Minsky y la IA',
+                    text: 'Minsky fundó el MIT AI Lab y escribió "Perceptrons" (1969) con Seymour Papert, identificando limitaciones de las redes neuronales tempranas que ralentizaron la investigación por décadas.'
+                },
+                {
+                    title: 'De la Neurona Biológica a la Artificial',
+                    text: 'El modelo de McCulloch-Pitts (1943) convirtió la biología en matemáticas. Una neurona artificial recibe señales, las pondera y produce una salida binaria,-fundamento de toda red neuronal.'
+                }
+            ]
+        };
+
+        let currentLevel = 1;
+        let score = 0;
+        let timeElapsed = 0;
+        let gameTimer;
+        let completedConcepts = [];
+        let currentQuestionIndex = 0;
+
+        function initMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+
+            for (let i = 0; i < 20; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = `${Math.random() * 100}%`;
+                column.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                column.style.animationDelay = `${Math.random() * 5}s`;
+
+                let text = '';
+                for (let j = 0; j < 50; j++) {
+                    text += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+                }
+                column.innerHTML = text;
+                container.appendChild(column);
+            }
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function createDraggableCards() {
+            const conceptContainer = document.getElementById('conceptCards');
+            const personContainer = document.getElementById('personCards');
+
+            conceptContainer.innerHTML = '';
+            personContainer.innerHTML = '';
+
+            const concepts = gameData.concepts.filter(c => c.type === 'concept' && !completedConcepts.includes(c.id));
+            const persons = gameData.concepts.filter(c => c.type === 'person' && !completedConcepts.includes(c.id));
+
+            const shuffledConcepts = shuffleArray(concepts);
+            const shuffledPersons = shuffleArray(persons);
+
+            shuffledConcepts.forEach(concept => {
+                const card = document.createElement('div');
+                card.className = 'draggable-item';
+                card.draggable = true;
+                card.dataset.id = concept.id;
+                card.dataset.type = 'concept';
+                card.textContent = concept.text;
+
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+
+                conceptContainer.appendChild(card);
+            });
+
+            shuffledPersons.forEach(person => {
+                const card = document.createElement('div');
+                card.className = 'draggable-item';
+                card.draggable = true;
+                card.dataset.id = person.id;
+                card.dataset.type = 'person';
+                card.textContent = person.text;
+
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+
+                personContainer.appendChild(card);
+            });
+        }
+
+        function handleDragStart(e) {
+            e.target.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', JSON.stringify({
+                id: e.target.dataset.id,
+                type: e.target.dataset.type
+            }));
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function initDropZones() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('highlight');
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('highlight');
+                });
+
+                zone.addEventListener('drop', handleDrop);
+            });
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const zone = e.currentTarget;
+            zone.classList.remove('highlight');
+
+            const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+            const draggedElement = document.querySelector(`[data-id="${data.id}"]`);
+
+            if (!draggedElement) return;
+
+            const accepts = zone.dataset.accepts;
+            const correctConcept = gameData.concepts.find(c => c.id === data.id);
+
+            if (correctConcept) {
+                const isCorrect = (accepts === 'concept' && correctConcept.type === 'concept') ||
+                                  (accepts === 'person' && correctConcept.type === 'person');
+
+                if (isCorrect) {
+                    zone.classList.add('correct');
+                    draggedElement.style.display = 'none';
+                    completedConcepts.push(data.id);
+
+                    const points = 100 * currentLevel;
+                    score += points;
+                    updateScore();
+
+                    createFloatingText(`+${points}`, e.clientX, e.clientY);
+
+                    setTimeout(() => {
+                        zone.classList.remove('correct');
+                        checkLevelComplete();
+                    }, 1000);
+                } else {
+                    zone.classList.add('incorrect');
+                    setTimeout(() => {
+                        zone.classList.remove('incorrect');
+                    }, 1000);
+                }
+            }
+        }
+
+        function createFloatingText(text, x, y) {
+            const floater = document.createElement('div');
+            floater.className = 'floating-text';
+            floater.textContent = text;
+            floater.style.left = `${x}px`;
+            floater.style.top = `${y}px`;
+            document.body.appendChild(floater);
+
+            setTimeout(() => {
+                floater.remove();
+            }, 2000);
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score.toString().padStart(4, '0');
+        }
+
+        function updateProgress() {
+            const total = gameData.concepts.length;
+            const completed = completedConcepts.length;
+            const percentage = Math.round((completed / total) * 100);
+
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `${percentage}%`;
+        }
+
+        function checkLevelComplete() {
+            updateProgress();
+
+            const conceptsLeft = gameData.concepts.filter(c => !completedConcepts.includes(c.id)).length;
+
+            if (conceptsLeft === 0) {
+                showQuestion();
+            }
+        }
+
+        function showQuestion() {
+            const modal = document.getElementById('levelCompleteModal');
+            const text = document.getElementById('levelCompleteText');
+
+            const question = gameData.questions[currentQuestionIndex];
+
+            text.innerHTML = `
+                <div class="question-box">
+                    <h3>PREGUNTA DE DESAFÍO</h3>
+                    <p>${question.question}</p>
+                    ${question.options.map((opt, i) => `
+                        <button class="option-btn" onclick="answerQuestion(${i})">${opt}</button>
+                    `).join('')}
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function answerQuestion(selectedIndex) {
+            const question = gameData.questions[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.option-btn');
+
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === question.correct) {
+                    btn.classList.add('correct');
+                } else if (i === selectedIndex && selectedIndex !== question.correct) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            if (selectedIndex === question.correct) {
+                score += 200 * currentLevel;
+                updateScore();
+                createFloatingText('+BONUS!', window.innerWidth / 2, window.innerHeight / 2);
+            }
+
+            setTimeout(() => {
+                document.getElementById('levelCompleteModal').classList.remove('active');
+                currentQuestionIndex++;
+
+                if (currentQuestionIndex >= gameData.questions.length) {
+                    showFinalScreen();
+                } else {
+                    nextLevel();
+                }
+            }, 2000);
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            document.getElementById('level').textContent = currentLevel.toString().padStart(2, '0');
+
+            completedConcepts = [];
+            createDraggableCards();
+            updateProgress();
+
+            document.getElementById('infoText').textContent =
+                `Nivel ${currentLevel} - Completa la clasificación de conceptos para continuar. ` +
+                `La dificultad aumenta con cada nivel.`;
+        }
+
+        function showHint() {
+            const available = gameData.concepts.filter(c => !completedConcepts.includes(c.id));
+            if (available.length > 0) {
+                const hint = available[Math.floor(Math.random() * available.length)];
+                document.getElementById('infoText').innerHTML =
+                    `<strong>HINT:</strong> "${hint.text}" es un ${hint.type === 'concept' ? 'CONCEPTO DE ML' : 'PERSONAJE'}. ` +
+                    `Déjalo en la zona ${hint.type === 'concept' ? 'CONCEPTOS HISTÓRICOS' : 'PERSONAJES CLAVE'}.`;
+            }
+        }
+
+        function showHistoricalInfo() {
+            const fact = gameData.historicalFacts[Math.floor(Math.random() * gameData.historicalFacts.length)];
+            document.getElementById('infoModalContent').innerHTML = `
+                <h3 style="color: #33ff33; margin-bottom: 15px;">${fact.title}</h3>
+                <p style="color: #22aa22; line-height: 1.8;">${fact.text}</p>
+            `;
+            document.getElementById('infoModal').classList.add('active');
+        }
+
+        function closeInfoModal() {
+            document.getElementById('infoModal').classList.remove('active');
+        }
+
+        function showFinalScreen() {
+            const modal = document.getElementById('levelCompleteModal');
+            const text = document.getElementById('levelCompleteText');
+
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+
+            text.innerHTML = `
+                <div style="margin: 20px 0;">
+                    <h3 style="color: #33ff33; font-size: 24px; margin-bottom: 20px;">MISIÓN COMPLETADA</h3>
+                    <p style="font-size: 18px; margin: 10px 0;">Has demostrado tu conocimiento sobre la historia del Machine Learning.</p>
+                    <div style="margin: 30px 0; padding: 20px; border: 2px solid #33ff33;">
+                        <p style="margin: 5px 0;">Puntuación Final: <strong style="font-size: 32px;">${score}</strong></p>
+                        <p style="margin: 5px 0;">Tiempo: <strong>${minutes}:${seconds.toString().padStart(2, '0')}</strong></p>
+                        <p style="margin: 5px 0;">Nivel Alcanzado: <strong>${currentLevel}</strong></p>
+                    </div>
+                    <p style="color: #22aa22; font-size: 14px;">Has contribuido al avance de la inteligencia artificial hacia la AGI.</p>
+                </div>
+            `;
+
+            document.querySelector('#levelCompleteModal button').textContent = 'REINICIAR';
+            document.querySelector('#levelCompleteModal button').onclick = restartGame;
+
+            modal.classList.add('active');
+        }
+
+        function restartGame() {
+            currentLevel = 1;
+            score = 0;
+            timeElapsed = 0;
+            completedConcepts = [];
+            currentQuestionIndex = 0;
+
+            document.getElementById('level').textContent = '01';
+            updateScore();
+            createDraggableCards();
+            updateProgress();
+
+            document.querySelector('#levelCompleteModal button').textContent = 'CONTINUAR';
+            document.querySelector('#levelCompleteModal button').onclick = nextLevel;
+
+            document.getElementById('levelCompleteModal').classList.remove('active');
+
+            startTimer();
+
+            document.getElementById('infoText').textContent =
+                'Bienvenido al año 1959. La Guerra Fría está en su momento más crítico. ' +
+                'Clasifica correctamente todos los conceptos para completar la misión.';
+        }
+
+        function startTimer() {
+            if (gameTimer) clearInterval(gameTimer);
+
+            gameTimer = setInterval(() => {
+                timeElapsed++;
+                const minutes = Math.floor(timeElapsed / 60);
+                const seconds = timeElapsed % 60;
+                document.getElementById('time').textContent =
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+
+            const hourDeg = (hours * 30) + (minutes * 0.5);
+            const minuteDeg = minutes * 6;
+
+            document.getElementById('hourHand').style.transform = `rotate(${hourDeg}deg)`;
+            document.getElementById('minuteHand').style.transform = `rotate(${minuteDeg}deg)`;
+        }
+
+        function startGame() {
+            document.getElementById('introModal').classList.remove('active');
+            createDraggableCards();
+            initDropZones();
+            startTimer();
+            setInterval(updateClock, 1000);
+
+            document.getElementById('infoText').textContent =
+                'Arrastra las tarjetas a las zonas correctas. Clasifica conceptos y personajes ' +
+                'según corresponda. Completa todos los niveles para dominar la historia del ML.';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initMatrixRain();
+            document.getElementById('introModal').classList.add('active');
+
+            setTimeout(() => {
+                document.querySelector('.background-image').classList.add('glitch');
+                setTimeout(() => {
+                    document.querySelector('.background-image').classList.remove('glitch');
+                }, 500);
+            }, 3000);
+        });
+    </script>
+
+<script>
+/**
+ * Iframe 元素高亮注入脚本
+ * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
+ *
+ * 使用方法：
+ * 1. 将此脚本添加到目标网站的 HTML 中
+ * 2. 或通过浏览器扩展、用户脚本等方式注入
+ */
+
+(function () {
+  "use strict";
+
+  // 检查是否在 iframe 中
+  if (window.self === window.top) {
+    return; // 不在 iframe 中，不执行
+  }
+
+  // 检查是否已经初始化过
+  if (window.__iframeHighlightInitialized) {
+    return;
+  }
+  window.__iframeHighlightInitialized = true;
+  console.log("Iframe 高亮脚本已加载");
+
+  // 创建高亮覆盖层
+  var overlay = document.createElement("div");
+  overlay.id = "iframe-highlight-overlay";
+  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
+
+  // 创建悬停高亮框（虚线边框）
+  var highlightBox = document.createElement("div");
+  highlightBox.id = "iframe-highlight-box";
+  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
+
+  // 创建选中节点的常驻高亮框（实线边框）
+  var selectedBox = document.createElement("div");
+  selectedBox.id = "iframe-selected-box";
+  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
+
+  // 创建悬停标签显示
+  var tagLabel = document.createElement("div");
+  tagLabel.id = "iframe-tag-label";
+  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
+
+  // 创建选中节点标签
+  var selectedLabel = document.createElement("div");
+  selectedLabel.id = "iframe-selected-label";
+  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
+  overlay.appendChild(highlightBox);
+  overlay.appendChild(selectedBox);
+  overlay.appendChild(tagLabel);
+  overlay.appendChild(selectedLabel);
+  document.body.appendChild(overlay);
+
+  // 存储当前选中的元素
+  var selectedElement = null;
+  var highlightEnabled = false;
+
+  // 更新选中元素的高亮显示
+  function updateSelectedHighlight(element) {
+    console.log("updateSelectedHighlight called with:", element);
+    if (!element) {
+      selectedBox.style.display = "none";
+      selectedLabel.style.display = "none";
+      selectedElement = null;
+      console.log("Cleared selected highlight");
+      return;
+    }
+    selectedElement = element;
+    var rect = element.getBoundingClientRect();
+    console.log("Selected element rect:", rect);
+
+    // 更新选中高亮框位置
+    selectedBox.style.display = "block";
+    selectedBox.style.left = "".concat(rect.left - 2, "px");
+    selectedBox.style.top = "".concat(rect.top - 2, "px");
+    selectedBox.style.width = "".concat(rect.width + 4, "px");
+    selectedBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新选中标签位置和内容
+    selectedLabel.style.display = "block";
+    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 28;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 5) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
+    if (labelLeft + labelWidth > window.innerWidth - 10) {
+      labelLeft = window.innerWidth - labelWidth - 10;
+    }
+    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
+    selectedLabel.style.top = "".concat(labelTop, "px");
+    console.log("Selected highlight positioned at:", {
+      left: selectedBox.style.left,
+      top: selectedBox.style.top,
+      width: selectedBox.style.width,
+      height: selectedBox.style.height
+    });
+  }
+  function getElementSelector(element) {
+    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
+    var segments = [];
+    var current = element;
+    while (current !== document.documentElement) {
+      var selector = '';
+      // 优先检查唯一ID
+      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
+        segments.unshift("#".concat(current.id));
+        break; // ID唯一，无需继续向上
+      }
+
+      // 生成类名选择器（取第一个有效类名）
+      var classes = Array.from(current.classList).filter(function (c) {
+        return !c.startsWith('js-');
+      });
+      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
+
+      // 生成位置索引（nth-child）
+      var tag = current.tagName.toLowerCase();
+      if (!className) {
+        var siblings = Array.from(current.parentNode.children);
+        var index = siblings.findIndex(function (el) {
+          return el === current;
+        }) + 1;
+        selector = "".concat(tag, ":nth-child(").concat(index, ")");
+      } else {
+        selector = className;
+      }
+      segments.unshift(selector);
+      current = current.parentElement;
+    }
+
+    // 处理根元素
+    if (current === document.documentElement) {
+      segments.unshift('html');
+    }
+    return segments.join(' > ');
+  }
+
+  // 获取元素文本内容
+  function getElementText(element) {
+    var _element$textContent;
+    if (element.tagName === "INPUT") {
+      return element.value || element.placeholder || "";
+    }
+    if (element.tagName === "TEXTAREA") {
+      return element.value || element.placeholder || "";
+    }
+    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
+    return text.length > 50 ? text.substring(0, 50) + "..." : text;
+  }
+
+  // 获取元素属性信息
+  function getElementAttributes(element) {
+    var attrs = {};
+    for (var i = 0; i < element.attributes.length; i++) {
+      var attr = element.attributes[i];
+      attrs[attr.name] = attr.value;
+    }
+    return attrs;
+  }
+
+  // 鼠标悬停事件处理
+  function handleMouseOver(e) {
+    if (!highlightEnabled) return;
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免高亮 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 如果是已选中的元素，不显示悬停高亮
+    if (target === selectedElement) {
+      highlightBox.style.display = "none";
+      tagLabel.style.display = "none";
+      return;
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+
+    // 更新悬停高亮框位置
+    highlightBox.style.display = "block";
+    highlightBox.style.left = "".concat(rect.left - 2, "px");
+    highlightBox.style.top = "".concat(rect.top - 2, "px");
+    highlightBox.style.width = "".concat(rect.width + 4, "px");
+    highlightBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新标签位置和内容
+    tagLabel.style.display = "block";
+    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 22;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 0) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
+      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
+    }
+    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
+    tagLabel.style.top = "".concat(labelTop, "px");
+
+    // 发送消息到父窗口
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 鼠标离开事件处理
+  function handleMouseOut(e) {
+    if (!highlightEnabled) return;
+    var relatedTarget = e.relatedTarget;
+
+    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
+    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
+      return;
+    }
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: null,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 点击事件处理
+  function handleClick(e) {
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免处理 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 检查是否是交互元素，这些元素需要保留默认行为
+    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
+
+    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
+    if (highlightEnabled) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+    console.log("Element clicked:", {
+      tagName: target.tagName,
+      selector: selector,
+      rect: rect
+    });
+
+    // 立即更新选中高亮
+    updateSelectedHighlight(target);
+
+    // 隐藏悬停高亮，因为现在是选中状态
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-click",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 监听来自父窗口的消息
+  function handleParentMessage(event) {
+    console.log("Received message from parent:", event.data);
+    if (event.data.type === "iframe-highlight-toggle") {
+      var enabled = event.data.enabled;
+      console.log("Highlight toggle:", enabled);
+      if (enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "enable-iframe-highlight") {
+      console.log("Enable iframe highlight");
+      enableHighlight();
+    } else if (event.data.type === "disable-iframe-highlight") {
+      console.log("Disable iframe highlight");
+      disableHighlight();
+    } else if (event.data.type === "toggle-iframe-highlight") {
+      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
+      console.log("Toggle iframe highlight to:", _enabled);
+      if (_enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "update-selected-element") {
+      var selector = event.data.selector;
+      console.log("Update selected element with selector:", selector);
+      if (selector) {
+        try {
+          var element = document.querySelector(selector);
+          console.log("Found element by selector:", element);
+          updateSelectedHighlight(element);
+        } catch (error) {
+          console.warn("Failed to select element:", error);
+          updateSelectedHighlight(null);
+        }
+      } else {
+        updateSelectedHighlight(null);
+      }
+    } else if (event.data.type === "clear-selected-element") {
+      console.log("Clear selected element");
+      updateSelectedHighlight(null);
+    }
+  }
+
+  // 启用高亮功能
+  function enableHighlight() {
+    console.log("Enabling highlight");
+    document.addEventListener("mouseover", handleMouseOver, true);
+    document.addEventListener("mouseout", handleMouseOut, true);
+    document.addEventListener("click", handleClick, true);
+    highlightEnabled = true;
+    overlay.style.display = "block";
+  }
+
+  // 禁用高亮功能
+  function disableHighlight() {
+    console.log("Disabling highlight");
+    highlightEnabled = false;
+    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
+    // 这样可以保留选中状态的显示
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
+  }
+
+  // 完全禁用高亮功能（移除所有监听器）
+  function fullyDisableHighlight() {
+    console.log("Fully disabling highlight");
+    highlightEnabled = false;
+    document.removeEventListener("mouseover", handleMouseOver, true);
+    document.removeEventListener("mouseout", handleMouseOut, true);
+    document.removeEventListener("click", handleClick, true);
+    overlay.style.display = "none";
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    selectedBox.style.display = "none";
+    selectedLabel.style.display = "none";
+  }
+
+  // 添加事件监听
+  enableHighlight();
+  window.addEventListener("message", handleParentMessage);
+
+  // 暴露全局函数供外部调用
+  window.__iframeHighlightControl = {
+    enable: enableHighlight,
+    disable: disableHighlight,
+    fullyDisable: fullyDisableHighlight,
+    isEnabled: function isEnabled() {
+      return highlightEnabled;
+    },
+    getSelectedElement: function getSelectedElement() {
+      return selectedElement;
+    },
+    updateSelected: updateSelectedHighlight,
+    // 通过消息发送开关控制
+    sendToggleMessage: function sendToggleMessage(enabled) {
+      window.parent.postMessage({
+        type: 'iframe-highlight-status',
+        enabled: enabled || highlightEnabled,
+        source: 'iframe-highlight-injector'
+      }, '*');
+    }
+  };
+
+  // 通知父窗口脚本已加载
+  try {
+    window.parent.postMessage({
+      type: "iframe-highlight-ready",
+      data: {
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+        timestamp: Date.now()
+      },
+      source: "iframe-highlight-injector"
+    }, "*");
+  } catch (error) {
+    console.warn("无法发送就绪消息到父窗口:", error);
+  }
+
+  // 清理函数
+  window.__iframeHighlightCleanup = function () {
+    fullyDisableHighlight();
+    window.removeEventListener("message", handleParentMessage);
+    if (overlay.parentElement) {
+      overlay.parentElement.removeChild(overlay);
+    }
+    delete window.__iframeHighlightInitialized;
+    delete window.__iframeHighlightCleanup;
+  };
+})();
+
+</script>
+</body>
+</html>
