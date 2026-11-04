@@ -1,0 +1,17 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "Soil grain-size distribution from photos",
+  "dateModified": "2026-11-04",
+  "codeRepository": "https://github.com/Agnuxo1/soil-grain-size-from-photos",
+  "author": [
+    {
+      "@type": "Person",
+      "@id": "https://orcid.org/0009-0001-1634-7063",
+      "name": "Francisco Angulo de Lafuente",
+      "givenName": "Francisco",
+      "familyName": "Angulo de Lafuente"
+    }
+  ],
+  "license": "https://spdx.org/licenses/MIT.html"
+}

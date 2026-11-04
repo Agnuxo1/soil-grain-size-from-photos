@@ -1,0 +1,83 @@
+{
+  "title": "Soil grain size",
+  "sub": "Photographic estimation of cumulative distributions",
+  "issue": "Kaggle engineering baseline",
+  "sections": [
+    [
+      "Method",
+      "From photographs to one curve",
+      [
+        "Group views",
+        "Extract texture",
+        "Fit baseline",
+        "Project curve"
+      ],
+      [
+        "Use the sample ID",
+        "Colour and gradients",
+        "Ridge or ExtraTrees",
+        "Monotone; ends at 100%"
+      ]
+    ],
+    [
+      "Run",
+      "Reproduce with authorised inputs",
+      [
+        "Official labels",
+        "Match images",
+        "Run locally",
+        "Audit output"
+      ],
+      [
+        "Store outside Git",
+        "Use all available views",
+        "CPU baseline",
+        "Check order and bounds"
+      ]
+    ],
+    [
+      "Scope and limitations",
+      "Where the estimator can fail",
+      [
+        "Scale drift",
+        "Fine grains",
+        "View shift"
+      ],
+      [
+        "Record camera geometry",
+        "Resolution sets a floor",
+        "Test on held-out samples"
+      ]
+    ],
+    [
+      "License",
+      "Reuse and citation",
+      [
+        "Original code",
+        "External inputs",
+        "Cite the work"
+      ],
+      [
+        "MIT notice applies",
+        "Keep source terms",
+        "Use CITATION.cff"
+      ]
+    ],
+    [
+      "Bibliography and research directions",
+      "How the references inform follow-up",
+      [
+        "Primary sources",
+        "Study design",
+        "Evidence to report"
+      ],
+      [
+        "Resolve DOI or arXiv ID",
+        "Predefine comparisons",
+        "Separate hypotheses and results"
+      ]
+    ]
+  ],
+  "header_source": "docs/science-figures/cover-art.jpg",
+  "repository": "soil-grain-size-from-photos"
+}
