@@ -1,0 +1,11 @@
+{
+  "project": "soil-grain-size-from-photos",
+  "date": "2026-11-04",
+  "creator": {
+    "name": "Francisco Angulo de Lafuente",
+    "orcid": "https://orcid.org/0009-0001-1634-7063"
+  },
+  "figureRendererLicense": "MIT",
+  "projectLicense": "MIT",
+  "licenseFile": "LICENSE"
+}

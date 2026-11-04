@@ -1,0 +1,262 @@
+{
+  "title": "Soil grain size",
+  "subtitle": "Photographic estimation of cumulative distributions",
+  "figures": [
+    {
+      "kind": "xy",
+      "basis": "Illustrative simulation",
+      "title": "Project the cumulative grain-size curve",
+      "subtitle": "Illustrative values before and after a monotone correction",
+      "source": "Source: synthetic construction from the README output constraints",
+      "xlim": [
+        0,
+        5
+      ],
+      "ylim": [
+        0,
+        100
+      ],
+      "xlabel": "Ordered size bin (schematic)",
+      "ylabel": "Cumulative passing (%)",
+      "series": [
+        {
+          "label": "Raw model",
+          "points": [
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              24
+            ],
+            [
+              2,
+              49
+            ],
+            [
+              3,
+              43
+            ],
+            [
+              4,
+              88
+            ],
+            [
+              5,
+              97
+            ]
+          ]
+        },
+        {
+          "label": "Projected example",
+          "points": [
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              24
+            ],
+            [
+              2,
+              46
+            ],
+            [
+              3,
+              46
+            ],
+            [
+              4,
+              88
+            ],
+            [
+              5,
+              100
+            ]
+          ]
+        }
+      ],
+      "alt": "Project the cumulative grain-size curve. Illustrative values before and after a monotone correction",
+      "xticks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "yticks": [
+        0,
+        25,
+        50,
+        75,
+        100
+      ],
+      "id": "fig-01"
+    },
+    {
+      "kind": "flow",
+      "id": "fig-02",
+      "basis": "Technical schematic",
+      "title": "Reproduce with authorised inputs",
+      "subtitle": "Store outside Git   /   Use all available views   /   CPU baseline   /   Check order and bounds",
+      "source": "Source: README.md · conceptual relations, no measured values",
+      "nodes": [
+        [
+          0.115,
+          0.52,
+          "Official labels"
+        ],
+        [
+          0.38,
+          0.52,
+          "Match images"
+        ],
+        [
+          0.62,
+          0.52,
+          "Run locally"
+        ],
+        [
+          0.885,
+          0.52,
+          "Audit output"
+        ]
+      ],
+      "edges": [
+        [
+          0,
+          1,
+          ""
+        ],
+        [
+          1,
+          2,
+          ""
+        ],
+        [
+          2,
+          3,
+          ""
+        ]
+      ],
+      "alt": "Reproduce with authorised inputs. Official labels: Store outside Git; Match images: Use all available views; Run locally: CPU baseline; Audit output: Check order and bounds"
+    },
+    {
+      "kind": "flow",
+      "id": "fig-03",
+      "basis": "Technical schematic",
+      "title": "Where the estimator can fail",
+      "subtitle": "Record camera geometry   /   Resolution sets a floor   /   Test on held-out samples",
+      "source": "Source: README.md · conceptual relations, no measured values",
+      "nodes": [
+        [
+          0.16,
+          0.52,
+          "Scale drift"
+        ],
+        [
+          0.5,
+          0.52,
+          "Fine grains"
+        ],
+        [
+          0.84,
+          0.52,
+          "View shift"
+        ]
+      ],
+      "edges": [
+        [
+          0,
+          1,
+          ""
+        ],
+        [
+          1,
+          2,
+          ""
+        ]
+      ],
+      "alt": "Where the estimator can fail. Scale drift: Record camera geometry; Fine grains: Resolution sets a floor; View shift: Test on held-out samples"
+    },
+    {
+      "kind": "flow",
+      "id": "fig-04",
+      "basis": "Technical schematic",
+      "title": "Reuse and citation",
+      "subtitle": "MIT notice applies   /   Keep source terms   /   Use CITATION.cff",
+      "source": "Source: README.md · conceptual relations, no measured values",
+      "nodes": [
+        [
+          0.16,
+          0.52,
+          "Original code"
+        ],
+        [
+          0.5,
+          0.52,
+          "External inputs"
+        ],
+        [
+          0.84,
+          0.52,
+          "Cite the work"
+        ]
+      ],
+      "edges": [
+        [
+          0,
+          1,
+          ""
+        ],
+        [
+          1,
+          2,
+          ""
+        ]
+      ],
+      "alt": "Reuse and citation. Original code: MIT notice applies; External inputs: Keep source terms; Cite the work: Use CITATION.cff"
+    },
+    {
+      "kind": "flow",
+      "id": "fig-05",
+      "basis": "Technical schematic",
+      "title": "How the references inform follow-up",
+      "subtitle": "Resolve DOI or arXiv ID   /   Predefine comparisons   /   Separate hypotheses and results",
+      "source": "Source: README.md · conceptual relations, no measured values",
+      "nodes": [
+        [
+          0.16,
+          0.52,
+          "Primary sources"
+        ],
+        [
+          0.5,
+          0.52,
+          "Study design"
+        ],
+        [
+          0.84,
+          0.52,
+          "Evidence to report"
+        ]
+      ],
+      "edges": [
+        [
+          0,
+          1,
+          ""
+        ],
+        [
+          1,
+          2,
+          ""
+        ]
+      ],
+      "alt": "How the references inform follow-up. Primary sources: Resolve DOI or arXiv ID; Study design: Predefine comparisons; Evidence to report: Separate hypotheses and results"
+    }
+  ]
+}
