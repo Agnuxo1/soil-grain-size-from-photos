@@ -8,6 +8,8 @@
 
 ![Soil GSD header](assets/header.png)
 
+**Official public leaderboard, lower is better: 143.84834 for the Ridge and ExtraTrees blend in this repository, and 60.79507 as the author's best score, from a later model that is not included here.**
+
 This repository contains a reproducible, CPU-friendly baseline for [Predicting Soil Grain Size Distributions from Images](https://www.kaggle.com/competitions/soil-grain-size-from-photos). The task is to predict an eleven-point cumulative grain-size distribution from one or more photographs of a soil sample.
 
 ![Feature pipeline](assets/feature-pipeline.png)
