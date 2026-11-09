@@ -1,0 +1,18 @@
+{
+ "experiment":"SOIL-PATCH-STATS-20261109",
+ "author":"Francisco Angulo de Lafuente",
+ "assistance":"Codex; recovered original baseline/control credited to previous work",
+ "baseline":"Official56566750public60.79507; exactly reproduced feature_concat CSV and20historical OOF metrics mean34.45786163217882",
+ "hypothesis":"Local patch-token distributions retain grain texture information lost by global CLS pooling.",
+ "configuration_count":1,
+ "model":"timm/vit_small_patch14_reg4_dinov2.lvd142m",
+ "model_revision":"07c9addcbc7d8ca698afe88784a057056aec490d",
+ "data":"Only127trainingphotos/24physicalsamplelabels before gate; officialcurrent3CSVbytecomparison and165file-name/sizecomparison verified; immutable local imageSHAmanifest before extract",
+ "preprocessing":"Same fixed518px physicalcrops,target5pixels/mm,longmargin.12,ImageOpsEXIFtranspose+LANCZOS,originalnormalisation,5existingviews. Same4cropindices1,2,3,4 and allphotos persample for evaluation.",
+ "descriptor":"RemoveCLS+4registertokens; require1369patchtokens×384 at518px. L2normalize eachpatchtoken inFloat32; per-cropmean/std(ddof0) overpatches→768. Aggregate mean/std over same4crops/allphotos persample→1536. Append to frozen2562features→4098.",
+ "regression":"Unchanged fold-localStandardScaler,Ridgealpha1solverlsqr,sqrtmass targets, fixed20fivefold partitions seeds20260925..20260944. No grid/blend/alternativepooling tuning.",
+ "feasibility":"First20fixedtrainingphotos from originalcacheorder, all5views, samepublicpinnedweights. RequireminimumCLSnormalizedcosine>=.9999 against originalcache, finiteoutputs,source/input/model/runtime/checkpointidentity. Pilot provescompatibility only, notaccuracy.",
+ "promotion":{"minimum_mean_emd_reduction":1.0,"lower95pct_paired_improvement":"greater than0","bootstrap_replicates":10000,"bootstrap_seed":20261109,"clusters":24,"unit":"physicalsample; average eachsample's OOF loss across20reusedsplits beforebootstrap","test_new_feature_extraction_before_pass":false},
+ "resources":"Managedserver1GPU8GiBVRAM8GiBRAM,timeout<=15m,persistentatomiccheckpoints,exclusivewriterlock,numworkers0. Read-onlysharedtrainingenvironment/cache ifcompatible; no sharedpackageinstalls,local/KaggleGPU,externalimageupload orotherownerchanges.",
+ "limitations":"Historical24samples, priorselection and Android-to-iPhone domainshift remain. Repeats are split-sensitivity,not480independentobservations. Any publicprobe exploratory; no winning/clinical/geotechnical-safetyclaim. Ifgatefails keepnegative andcurrentofficialbest."
+}

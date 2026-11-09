@@ -1,0 +1,33 @@
+{
+  "experiment": "SOIL-PATCH-STATS-20261109",
+  "author": "Francisco Angulo de Lafuente",
+  "orcid": "https://orcid.org/0009-0001-1634-7063",
+  "project": "/mnt/datos/proyectos/soil-grain-size-20261109",
+  "asset_manifest_sha256": "608e4ab420fe99a3f14a2ba004edae99fc9d2c8625b41ea66ef159016e66d773",
+  "weights_sha256": "dca70548ecd7b03ffba6172c4db403014511b5ee6073f9fca72ba9e6e602a25d",
+  "model_config_sha256": "d17aecdc74880493ace6b680e31b7e003c98127e9a4060abc8ada95fe8f4c46f",
+  "model_revision": "07c9addcbc7d8ca698afe88784a057056aec490d",
+  "timm_version": "1.0.30",
+  "runtime": {
+    "torch": "2.14.1+cu130",
+    "torchvision": "0.29.1+cu130",
+    "numpy": "2.5.2",
+    "pandas": "3.1.0",
+    "Pillow": "12.3.0",
+    "safetensors": "0.8.0",
+    "huggingface-hub": "2.3.0"
+  },
+  "rows": 127,
+  "pilot_rows": 20,
+  "views": 5,
+  "minimum_cls_cosine": 0.9999,
+  "preprocessing_original_sha256": "5eb00fe6f106d1eb76a952f88bd1122a6016ad0076af74d126054840fb9d3fb9",
+  "batch_images": 4,
+  "workers": 0,
+  "input_size": 518,
+  "patch_tokens": 1369,
+  "feature_dim": 384,
+  "prefix_tokens": 5,
+  "output_descriptor_dim_per_view": 768,
+  "precision": "fp16_autocast;Float32statistics;TF32disabled"
+}

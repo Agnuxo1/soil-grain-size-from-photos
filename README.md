@@ -84,3 +84,27 @@ The following primary sources inform proposed checks. Their text, code, figures,
 **Attribution and reuse.** Please credit [Francisco Angulo de Lafuente](https://orcid.org/0009-0001-1634-7063) in academic and software reuse and do not present this work as your own. When distributing copies or substantial portions of the original MIT software, preserve the copyright and permission notice. Upstream material keeps its own terms. [License](LICENSE) · [Figure methods and provenance](docs/figures/README.md).
 
 <!-- research-provenance: project=soil-grain-size-from-photos; date=2026-11-04; author=Francisco Angulo de Lafuente; orcid=https://orcid.org/0009-0001-1634-7063; original-software-license=MIT -->
+
+
+<!-- soil-research-audit-20261109:start -->
+## Verified research update — 9 November 2026
+
+The retained official submission is **56566750**, public EMD **60.79507**, confirmed by an
+authenticated account readback on 9 November. Its training control was reproduced at EMD
+**34.4578616**, and the existing submission CSV matched byte for byte.
+
+Three fixed exploratory comparisons were completed: patch statistics (35.3048941), DINOv2
+ViT-L features (37.3994683), and all five physical crops (35.3000932). Lower EMD is better;
+all three failed the preregistered promotion criterion. No new test features or prediction
+submission were produced. Validation reuses 24 physical samples across 20 partitions;
+the intervals and acquisition-shift limitations are recorded with the results.
+
+[Source and evidence](research/2026-11-09/README.md) ·
+[Associated Kaggle source notebook](https://www.kaggle.com/code/franciscoangulo/soil-gsd-audit-20261109-patch-large-all-views) ·
+[Hugging Face source archive](https://huggingface.co/datasets/Agnuxo/soil-gsd-research-source-archive-20261109)
+
+The source notebook and archive have been downloaded anonymously and checked against the
+reviewed bytes. Kaggle's notebook run was still queued during its reported platform incident;
+the source publication is separate from that execution and from a competition entry.
+The archive includes the reproduction prerequisites and does not redistribute competition data.
+<!-- soil-research-audit-20261109:end -->

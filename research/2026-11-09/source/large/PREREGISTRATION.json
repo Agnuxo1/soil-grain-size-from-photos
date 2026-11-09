@@ -1,0 +1,27 @@
+{
+  "experiment": "SOIL-LARGE-CLS-20261109",
+  "author": "Francisco Angulo de Lafuente",
+  "orcid": "0009-0001-1634-7063",
+  "JEV": "provenance=jev,one_fixed_large_backbone,confidence1.0; answer retained separately",
+  "hypothesis": "Replacing the frozen small DINOv2 global representation with the public large model improves transfer for grain-size regression. This is an unproven hypothesis, not a soil performance claim from the model card.",
+  "configuration_count": 1,
+  "model": "timm/vit_large_patch14_reg4_dinov2.lvd142m",
+  "model_revision": "f3c408e77602bb412aa65fb03dfa0d5f95cb3832",
+  "model_license": "Apache-2.0",
+  "weights_sha256": "c893d72294d4c327e631ff92f428dbc14c4f93cb5581b6c5f9d89bb5d17def27",
+  "preprocessing": "Same nine copied original RGB physical-crop components,518pixels,5pixels/mm,five physical square crops at positions0,.25,.5,.75,1. Evaluation usescropindices1..4/allphotos perphysicalsample. AST/hash binding to the already calibrated small-model preprocessing.",
+  "representation": "L2normalize each1024CLSview; mean/std(ddof0) across4crops/allphotos ->2048. Replace small768 features, concatenate unchanged physical1794 ->3842. No patch-statistics features from the failed trial.",
+  "regression": "Unchanged fold-localScaler,Ridgealpha1lsqr,sqrtmass,20fivefoldpartitionsseeds20260925..20260944 over24physicalsample rows. No grid, blend or fitting during GPU extraction.",
+  "smoke": "First4fixedtrainingphotos/all5views,batch1image. Requirefinite1024CLS and minimum FP16-vs-FP32same-model normalizedcosine>=.9999, matchingsource/input/model/runtime/order and completedcheckpoint. This is resource/precision evidence only. Smallpreprocessing calibration127photos minCLS.9999966 already verified under exactcopiedpreprocess hash.",
+  "resources": "Managedserver1GPU12GiBVRAM8GiBRAM,timeout15m,atomicpersistentcheckpoints,exclusivewriterlock,workers0,4CPUthreads. Project-localmodel; sharedtimm1.0.30 reusedread-only. No local/KaggleGPU or otherownerchanges.",
+  "promotion": {
+    "minimum_mean_emd_reduction": 1.0,
+    "lower95pct_paired_cluster_improvement": "greaterthan0",
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20261109,
+    "unit": "24physicalsamples; eachsampleloss averaged over20reusedpartitions beforebootstrap",
+    "new_test_features_before_gate": false
+  },
+  "comparison": "Baseline exactOOF34.45786163217882, official56566750public60.79507. Priorpatchstatistics OOF35.304894 failed; preserve it and do not submit/testthatconfiguration.",
+  "limitations": "24historically selected samples, exploratorymodelselectionreuses same validation, Android/iPhone shift persists. CI does not correct prior selection. No new data, soil safety, officialscore/rank or winning claim. Failed gate keeps current officialbest."
+}

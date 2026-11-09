@@ -1,0 +1,6 @@
+{
+ "finding":"The reused preprocessing generates five physical square crops at long-axis positions0,.25,.5,.75,1. View0 is not a full-frame view.",
+ "evidence":"Actual physical_crops source plus observed127photos/all5views smallCLScompatibility>=.9999966",
+ "unchanged_algorithm":"Both recovered baseline and failed patch-statistics evaluation deliberately use indices1..4. No crop, pooled descriptor, OOF prediction or gate changes.",
+ "documentation_correction":"Earlier internal full-frame-exclusion wording should read exclusion of the first physical crop. Frozen original sources/reports retained; no new public claim or submission from this experiment."
+}

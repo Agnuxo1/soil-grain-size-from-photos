@@ -1,0 +1,68 @@
+{
+  "author": "Francisco Angulo de Lafuente",
+  "orcid": "0009-0001-1634-7063",
+  "date": "2026-11-09",
+  "competition": "soil-grain-size-from-photos",
+  "official_account_readback": {
+    "observed_utc": "2026-11-09T15:48:47.014629+00:00",
+    "competition": "soil-grain-size-from-photos",
+    "best_submission_id": 56566750,
+    "best_public_emd": 60.79507,
+    "best_submission_date": "2026-09-26T02:16:45.913Z",
+    "best_filename": "feature_concat_submission.csv",
+    "best_status": "COMPLETE",
+    "listed_submissions": 13,
+    "new_submission_during_scientific_batch": false,
+    "write_action": false
+  },
+  "baseline_training_emd": 34.45786163217882,
+  "physical_samples": 24,
+  "training_photographs": 127,
+  "validation_repeats": 20,
+  "folds_per_repeat": 5,
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20261109,
+  "promotion_minimum_emd_reduction": 1.0,
+  "promotion_lower95pct_ci_must_exceed": 0,
+  "confidence_interval_scope": "Exploratory physical-sample bootstrap; repeats reuse24samples; prior selection is not corrected.",
+  "results": [
+    {
+      "experiment": "SOIL-PATCH-STATS-20261109",
+      "candidate_mean_emd": 35.304894072583465,
+      "mean_emd_reduction": -0.8470324404046486,
+      "paired_cluster_95pct_ci": [
+        -2.6397493280709883,
+        0.8061872750483564
+      ],
+      "promotion_gate_passed": false,
+      "new_test_extraction_or_submission": false,
+      "original_private_report_sha256": "c2f78f5f53a0ec64e390a1a9e91f2951101030fd6cbf597222ca1b8336c46285"
+    },
+    {
+      "experiment": "SOIL-LARGE-CLS-20261109",
+      "candidate_mean_emd": 37.39946830525388,
+      "mean_emd_reduction": -2.9416066730750674,
+      "paired_cluster_95pct_ci": [
+        -6.494128946767268,
+        0.5586761609875786
+      ],
+      "promotion_gate_passed": false,
+      "new_test_extraction_or_submission": false,
+      "original_private_report_sha256": "31f9b6ea6d22ee3b77bae1405b9477d4242185070c7c8d3fedc0b32fa5b924a9"
+    },
+    {
+      "experiment": "SOIL-ALL5-VIEWS-20261109",
+      "candidate_mean_emd": 35.30009324231186,
+      "mean_emd_reduction": -0.8422316101330454,
+      "paired_cluster_95pct_ci": [
+        -1.424221963639651,
+        -0.32534075360831816
+      ],
+      "promotion_gate_passed": false,
+      "new_test_extraction_or_submission": false,
+      "original_private_report_sha256": "af1bd641c4e988021adde4ba19d5b677d5cda33d77de20103d1a4fc025013257"
+    }
+  ],
+  "new_submission_created": false,
+  "raw_data_features_predictions_weights_in_archive": false
+}

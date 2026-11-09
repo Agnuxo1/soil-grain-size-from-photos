@@ -1,0 +1,130 @@
+{
+  "patch_optimisation": {
+    "original_counterexample_reproduced_before_fix": true,
+    "original_empty_summary_accepted_under_O": true,
+    "optimised_execution_rejected_after_fix": [
+      {
+        "entry": "evaluation_core.py",
+        "mode": "flag",
+        "exit_code": 1,
+        "rejected_before_imports": true
+      },
+      {
+        "entry": "evaluation_core.py",
+        "mode": "environment",
+        "exit_code": 1,
+        "rejected_before_imports": true
+      },
+      {
+        "entry": "evaluate_candidate.py",
+        "mode": "flag",
+        "exit_code": 1,
+        "rejected_before_imports": true
+      },
+      {
+        "entry": "evaluate_candidate.py",
+        "mode": "environment",
+        "exit_code": 1,
+        "rejected_before_imports": true
+      },
+      {
+        "entry": "gpu-source-v2/extract_patch_stats.py",
+        "mode": "flag",
+        "exit_code": 1,
+        "rejected_before_imports": true
+      },
+      {
+        "entry": "gpu-source-v2/extract_patch_stats.py",
+        "mode": "environment",
+        "exit_code": 1,
+        "rejected_before_imports": true
+      },
+      {
+        "entry": "gpu-source-v2/run_safe.py",
+        "mode": "flag",
+        "exit_code": 1,
+        "rejected_before_imports": true
+      },
+      {
+        "entry": "gpu-source-v2/run_safe.py",
+        "mode": "environment",
+        "exit_code": 1,
+        "rejected_before_imports": true
+      }
+    ],
+    "checks_passed": 8,
+    "previous_gpu_revision_preserved": true,
+    "scientific_configuration_or_threshold_changed": false
+  },
+  "patch_reverification": {
+    "complete_manifest_sha256": "2266f40fb08d8a987feecea6756e1806dd699a84be971d2a30b7fad8af095a06",
+    "baseline_proof_sha256": "1a40b3453e6cefb3a283270a49254fd8aa4d9651300d1dcadf4300bf39666d6d",
+    "historical_executed_module_sha256": "8260d5a00798b68b26f696ad060cb6b3c0d93273a5ee7d22dfe503beaef10d22",
+    "verifier_source_sha256": "2e882068b726d831e13f1d5ad35c69585da207f6a96f066de87cd788bc476207",
+    "original_result_sha256": "c2f78f5f53a0ec64e390a1a9e91f2951101030fd6cbf597222ca1b8336c46285",
+    "all20baseline_and_candidate_partitions_recomputed_match": true,
+    "negative_gate_reconfirmed": true,
+    "baseline_mean_emd": 34.45786163217882,
+    "candidate_mean_emd": 35.304894072583465,
+    "mean_emd_reduction": -0.8470324404046486,
+    "paired_cluster_95pct_ci": [
+      -2.6397493280709883,
+      0.8061872750483564
+    ],
+    "preregistered_gate_passed": false,
+    "clusters": 24,
+    "repeats_reuse_same_clusters": 20,
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20261109,
+    "original_sources_results_unchanged": true,
+    "test_permission_issued": false
+  },
+  "large_smoke_admission": {
+    "synthetic_cpu_only": true,
+    "actual_old_summary_only_bypass_reproduced": true,
+    "corrected_positive_passed": true,
+    "adverse_cases_rejected": [
+      "missing_both_artifacts",
+      "truncated_cls",
+      "truncated_checkpoint",
+      "incomplete_checkpoint",
+      "wrong_digest",
+      "wrong_shape",
+      "nonfinite",
+      "changed_features",
+      "low_cosine",
+      "false_completed",
+      "wrong_identity"
+    ],
+    "actual_crop_function_gives_five_physical_squares_not_fullframe": true,
+    "scientific_indices_1_to_4_unchanged": true,
+    "real_smoke_or_accuracy_result": false
+  },
+  "large_reference_binding": {
+    "original_missing_mapping_binding_counterexample_reproduced": true,
+    "same_file_names_and_id_set_but_wrong_pooling": true,
+    "new_input_hash_gate_rejects_changed_mapping": true,
+    "original_reference_unchanged": true,
+    "previous_source_and_seal_archived": true,
+    "amendment_before_first_candidate_evaluation": true,
+    "scientific_parameters_or_thresholds_changed": false
+  },
+  "large_pooling": {
+    "independent_orthogonal_vector_pooling_fixture_passed": true,
+    "row_permutation_invariant": true,
+    "per_view_scale_invariant": true,
+    "adverse_pooling_cases_rejected": 4,
+    "baseline_proof_itself_in_frozen_seal": true,
+    "changed_baseline_proof_rejected_without_resealing": true,
+    "core_metric_and24cluster_bootstrap_reused_byte_exact_from_previous_verified_source": true,
+    "new_test_access_or_permission": false
+  },
+  "all5_pooling": {
+    "independent_four_vs_five_orthogonal_vector_fixture_passed": true,
+    "view0_included_only_in_new_candidate": true,
+    "scale_and_photo_order_invariant": true,
+    "unregistered_viewconfigurations_rejected": 3,
+    "actual_old4crop_features_exactly_equal_frozen_control": true,
+    "no_test_data_access": true
+  }
+}

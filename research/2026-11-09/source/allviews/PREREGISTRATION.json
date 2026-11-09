@@ -1,0 +1,16 @@
+{
+ "experiment":"SOIL-ALL5-VIEWS-20261109",
+ "author":"Francisco Angulo de Lafuente",
+ "orcid":"0009-0001-1634-7063",
+ "JEV":"provenance=jev,one_fixed_all5_views_cpu,confidence0.94",
+ "hypothesis":"Uniformly using all five already-extracted physical crop positions recovers left-edge coverage omitted by the baseline. The first view is a square physical crop, not fullframe; its historical exclusion reason is unknown.",
+ "configuration_count":1,
+ "only_change":"Aggregate normalized original smallDINOCLS across indices0..4 instead of1..4, sameallphotos/sample. Mean/std768+unchangedphysical1794=2562. No model/crop/regression/hyperparameter/precision changes.",
+ "inputs":"Only existing127trainingphoto5view384D CLS in frozen train-reference.npz,24physicalsamplelabels. Hash manifest/reference, baselineproof/module/runtime/arrays sealed before evaluation. No GPU/newtestfeatures.",
+ "baseline_control":"Exact4cropaggregate must equal frozen768DINOtrainingfeatures; recompute baseline all20partitions and compare archivedpredictions before scoring candidate.",
+ "regression":"Fold-localScaler,Ridgealpha1lsqr,sqrtmass,20fivefoldseeds20260925..20260944,24physicalsample rows,unchanged.",
+ "gate":{"minimum_mean_emd_reduction":1.0,"lower95pct_paired_cluster_improvement":"greaterthan0","bootstrap_replicates":10000,"seed":20261109,"clusters":24,"averaging":"Eachsampleloss across20reusedpartitions beforebootstrap"},
+ "test_permission":"None issued by evaluation. Require gate+freshreview+JEVbefore generating testcandidate. If fail retainnegative/currentofficial56566750public60.79507.",
+ "limitations":"24historically selected samples, exploratory selection uses samefolds, CI doesnotcorrectpriorselection;Android/iPhoneshiftremains. Two priorGPUrepresentationtrialsfailed. No winningsafety/officialscoreclaim.",
+ "resources":"CPU4threads, no additionalGPUs used merely to occupy hardware. ManagedGPU0hasotherowner; preserveprioritycampaign/lanes. Original data/source immutable."
+}

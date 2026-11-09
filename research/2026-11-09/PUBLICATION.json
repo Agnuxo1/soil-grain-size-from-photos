@@ -1,0 +1,12 @@
+{
+  "kaggle_source_url": "https://www.kaggle.com/code/franciscoangulo/soil-gsd-audit-20261109-patch-large-all-views",
+  "kaggle_public_source_anonymous_http200_bytes_exact": true,
+  "kaggle_run_last_observed": "QUEUED during Kaggle notebook-start incident; source is already public",
+  "hf_public_source_url": "https://huggingface.co/datasets/Agnuxo/soil-gsd-research-source-archive-20261109",
+  "hf_commit": "73f940e97dd1c3073a57bdc07b926a40ba2dfc1a",
+  "hf_all8files_anonymous_exact": true,
+  "source_archive_sha256": "ab7645c27e64a46b20408cd76863372ebca8cc02a577f031c82d9dd46472224c",
+  "source_archive_bytes": 87905,
+  "new_competition_submission": false,
+  "raw_data_arrays_weights_predictions_credentials_included": false
+}
