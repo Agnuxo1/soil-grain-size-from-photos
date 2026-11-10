@@ -108,3 +108,8 @@ reviewed bytes. Kaggle's notebook run was still queued during its reported platf
 the source publication is separate from that execution and from a competition entry.
 The archive includes the reproduction prerequisites and does not redistribute competition data.
 <!-- soil-research-audit-20261109:end -->
+
+
+## Research update, 10 November 2026
+
+The SAM physical geometry comparison failed its unchanged prospective promotion gate. The existing official best is retained; no new test inference or competition submission was made. See the [experiment report](research/sam-20261110/README.md) for source, aggregate results, uncertainty and licences.

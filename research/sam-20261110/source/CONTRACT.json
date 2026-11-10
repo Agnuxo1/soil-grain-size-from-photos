@@ -1,0 +1,43 @@
+{
+  "project": "/mnt/datos/proyectos/soil-sam-morphometry-20261110",
+  "assets": "/mnt/datos/proyectos/soil-grain-size-20261109/assets",
+  "asset_manifest_sha256": "608e4ab420fe99a3f14a2ba004edae99fc9d2c8625b41ea66ef159016e66d773",
+  "model": {
+    "url": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth",
+    "bytes": 375042383,
+    "sha256": "ec2df62732614e57411cdcf32a23ffdf28910380d03139ee0f4fcbe91eb8c912",
+    "path": "/mnt/datos/proyectos/soil-sam-morphometry-20261110/sam_vit_b_01ec64.pth"
+  },
+  "runtime": {
+    "torch": "2.14.1+cu130",
+    "torchvision": "0.29.1+cu130",
+    "numpy": "2.5.2",
+    "pandas": "3.1.0",
+    "Pillow": "12.3.0"
+  },
+  "experiment": "SOIL-SAM-PHYSICAL-20261110",
+  "sam_settings": {
+    "points_per_side": 16,
+    "points_per_batch": 32,
+    "pred_iou_thresh": 0.88,
+    "stability_score_thresh": 0.95,
+    "stability_score_offset": 1.0,
+    "box_nms_thresh": 0.7,
+    "crop_n_layers": 0,
+    "min_mask_region_area": 0,
+    "output_mode": "binary_mask"
+  },
+  "geometry": {
+    "crop": 518,
+    "crop_index": 2,
+    "target_pixels_per_mm": 5.0,
+    "min_area_pixels": 16,
+    "maximum_crop_area_fraction": 0.25,
+    "reject_boundary_touching": true,
+    "photo_features": 44,
+    "sample_features": 88
+  },
+  "bootstrap_seed": 20261110,
+  "minimum_emd_gain": 1.0,
+  "upstream_commit": "dca509fe793f601edb92606367a655c15ac00fdf"
+}

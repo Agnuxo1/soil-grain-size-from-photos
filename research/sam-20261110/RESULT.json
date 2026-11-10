@@ -1,0 +1,19 @@
+{
+  "independent_sample_bootstrap_reproduced": true,
+  "baseline": 34.45786163217882,
+  "candidate": 34.53296273673842,
+  "reduction": -0.07510110455959783,
+  "ci95": [
+    -0.3499428721726968,
+    0.1335953441422037
+  ],
+  "gate_passed": false,
+  "experiment": "SOIL-SAM-PHYSICAL-20261110",
+  "author": "Francisco Angulo de Lafuente",
+  "orcid": "0009-0001-1634-7063",
+  "configuration_count": 1,
+  "official_submission_created": false,
+  "new_test_inference": false,
+  "official_best_preserved": 60.79507,
+  "uncertainty": "Exploratory reused historical folds, prior selection and indirect model/stacking dependencies; not an independent held-out confirmation or official result."
+}

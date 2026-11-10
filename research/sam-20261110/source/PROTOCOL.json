@@ -1,0 +1,37 @@
+{
+  "experiment": "SOIL-SAM-PHYSICAL-20261110",
+  "author": "Francisco Angulo de Lafuente",
+  "ORCID": "0009-0001-1634-7063",
+  "assistance": "Codex",
+  "hypothesis": "Mask-derived physical geometry complements fixed global embeddings across camera domain shift.",
+  "configuration_count": 1,
+  "input": "127trainingphotos/24physicalsamplegroups only; exact original5ppm/LANCZOS/EXIFtranspose/center518crop. No new test descriptors before passing.",
+  "model": "OriginalMetaSAMViT-B, Apache2, officialcheckpoint375042383B SHAec2df62732614e57411cdcf32a23ffdf28910380d03139ee0f4fcbe91eb8c912; upstream pinned commit and all source Gitblobs verified.",
+  "sam_settings": {
+    "points_per_side": 16,
+    "points_per_batch": 32,
+    "pred_iou_thresh": 0.88,
+    "stability_score_thresh": 0.95,
+    "stability_score_offset": 1.0,
+    "box_nms_thresh": 0.7,
+    "crop_n_layers": 0,
+    "min_mask_region_area": 0,
+    "output_mode": "binary_mask"
+  },
+  "geometry": {
+    "crop": 518,
+    "crop_index": 2,
+    "target_pixels_per_mm": 5.0,
+    "min_area_pixels": 16,
+    "maximum_crop_area_fraction": 0.25,
+    "reject_boundary_touching": true,
+    "photo_features": 44,
+    "sample_features": 88
+  },
+  "features": "ECD=2sqrt(mask_area/pi)/5mm. Count-,area-,diameter^3-weightedCDF at11officialdiameters; diameterquantiles.1/.25/.5/.75/.9; log1pcount,summedareaFraction,unionareaFraction,meanlogaspect,stdlogdiameter,meanpredictedIoU. Emptyset44zeros. Equalphoto mean/std per physicalsample ->88 appendedto2562frozenfeatures. Masks can overlap, so summedarea may exceed1; no claim these are verified grains or sieve-massCDF.",
+  "pilot": "First3photos only feasibility: at leastoneacceptedmask total, allfinite44outputs, inference<=120s,peakVRAM<=7.5GiB,RSS<=7GiB. Single attempt: an interrupted/failed pilot checkpoint forbids another pilot launch, preventing a reset of the timing gate. No labels/accuracy selection. Successful pilot checkpoint/full127 identity is reused by train, so completed pilot rows are not recomputed; full train may resume unchanged after terminal interruption.",
+  "evaluation": "Same frozen fold-localStandardScaler/Ridgealpha1solverlsqr/sqrtmass and20fivefoldpartitions seeds20260925..20260944. Exact baseline34.45786163217882 reproduced first. Fixedgate>=1EMDmeanreduction and lower95pairedphysicalsamplebootstrap>0,10kdrawsseed20261110. Reused24samples/priorselection/domainshift ->exploratory, not independent confirmation.",
+  "negative_history": "PATCH/LARGE/ALL5VIEWS failed and remain closed. This is one new geometry representation, no extra DINO sizes/pooling/config search.",
+  "resources": "Managedserver1GPU8VRAM8RAM,30mtimeout/full and5m/pilot,4CPUthreads,offline,source/input/model/runtimepins,exclusivewriterlock,atomiccheckpoint. No shared installs/local/KaggleGPU or owner/campaign/lane changes.",
+  "publication": "Code-only public backup may be published with competition-associated Kaggle notice after review; raw images/labels/descriptors/predictions remain private. No new submission unless strict gate and final review pass."
+}

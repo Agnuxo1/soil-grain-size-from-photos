@@ -1,0 +1,94 @@
+{
+  "repository": "facebookresearch/segment-anything",
+  "commit": "dca509fe793f601edb92606367a655c15ac00fdf",
+  "files": {
+    "LICENSE": {
+      "git_blob": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    "README.md": {
+      "git_blob": "2e58656beedd2d48ea7df680e27646d906f408de",
+      "sha256": "cab2c4900910c9e4afd64833f57d106b8fc1a27fca963d4439ae5b8f94cdbce1",
+      "bytes": 9621
+    },
+    "segment_anything/__init__.py": {
+      "git_blob": "34383d83f5e76bc801f31b20e5651e383be348b6",
+      "sha256": "c8d8eb649610b2d51f138481a89617a3dcb61106465121dcb1c2f23affc84c30",
+      "bytes": 427
+    },
+    "segment_anything/automatic_mask_generator.py": {
+      "git_blob": "d5a8c969207f119feff7087f94e044403acdff00",
+      "sha256": "71c698d2b6cbf5a62eafa5f12106fdf3bff676102adf1aed2287df3b3990b4e0",
+      "bytes": 15148
+    },
+    "segment_anything/build_sam.py": {
+      "git_blob": "37cd245124079e7cdd0d047ef9dde077db99efcc",
+      "sha256": "77bc4faf728118625ddd184dc4e6375bd1b5c636fc66fb429f9fc5276f331cc5",
+      "bytes": 2941
+    },
+    "segment_anything/modeling/__init__.py": {
+      "git_blob": "38e906243d898d7fc071c0fe218338c5cace3ea1",
+      "sha256": "47f6363b86c0bfaa7a6abf723975136d17fae4a5f002d2814a5cce8834d18980",
+      "bytes": 385
+    },
+    "segment_anything/modeling/common.py": {
+      "git_blob": "2bf15236a3eb24d8526073bc4fa2b274cccb3f96",
+      "sha256": "59a53bfa5d0a4d446df7f2bb57d2e95808b130601592b934600fb663d256ce17",
+      "bytes": 1479
+    },
+    "segment_anything/modeling/image_encoder.py": {
+      "git_blob": "66351d9d7c589be693f4b3485901d3bdfed54d4a",
+      "sha256": "1665ada2902722c9a8cd566c840e324d623ef2b12f7d9ae9f38b24aed0e39886",
+      "bytes": 14420
+    },
+    "segment_anything/modeling/mask_decoder.py": {
+      "git_blob": "5d2fdb03d535a91fa725d1ec4e92a7a1f217dfe0",
+      "sha256": "6a2455e990515c67a061187c92c236b879b189f21ef6ebfce1627cae9a6b2f93",
+      "bytes": 6615
+    },
+    "segment_anything/modeling/prompt_encoder.py": {
+      "git_blob": "c3143f4f8e02ddd7ca8587b40ff5d47c3a6b7ef3",
+      "sha256": "bd8f2f5903f0647f55c21c608bcbb334eec2901ebe76aa41061b1c513df4a06f",
+      "bytes": 8594
+    },
+    "segment_anything/modeling/sam.py": {
+      "git_blob": "8074cff6b40addc6b66f7ab4962218eef20da13c",
+      "sha256": "2d501173b7345f6829f745a2ade240c98026f6b3237bf6cf8e9473405e86c54e",
+      "bytes": 7226
+    },
+    "segment_anything/modeling/transformer.py": {
+      "git_blob": "28fafea52288603fea275f3a100790471825c34a",
+      "sha256": "566a8f6db8b608398de939548bd0f485b21752fda2bdda36900e6444ef938d11",
+      "bytes": 8397
+    },
+    "segment_anything/predictor.py": {
+      "git_blob": "8a6e6d816955b4c6097e1de6ce6e4ed3bafe327c",
+      "sha256": "ab66c29ac0b5b204d23997ef49d8a2476f71b596ce97e35efbf116cfc2118fce",
+      "bytes": 11649
+    },
+    "segment_anything/utils/__init__.py": {
+      "git_blob": "5277f46157403e47fd830fc519144b97ef69d4ae",
+      "sha256": "34bd8069c54764e7b8d73a78905dbe6467140a2f73170875128f6ca4d8cdd0aa",
+      "bytes": 197
+    },
+    "segment_anything/utils/amg.py": {
+      "git_blob": "be064071ef399fea96c673ad173689656c23534a",
+      "sha256": "5c10f8dd63facb642ff090f61426b35b3c6c3a07e72839595cb04d74828b1d39",
+      "bytes": 12712
+    },
+    "segment_anything/utils/onnx.py": {
+      "git_blob": "3196bdf4b782e6eeb3da4ad66ef3c7b1741535fe",
+      "sha256": "b4410ac1dc9a7bb3a09827520fa08454f9b397608775e2fe4ebfb7c8dbb02666",
+      "bytes": 5812
+    },
+    "segment_anything/utils/transforms.py": {
+      "git_blob": "c08ba1e3db751f3a5483a003be38c69c2cf2df85",
+      "sha256": "26a649f2bca8a4a24b4d56617487a9a54c4279e559b2b813c9de38f58a60107c",
+      "bytes": 3972
+    }
+  },
+  "checkpoint_url": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth",
+  "license_file": "upstream/LICENSE",
+  "training_dataset_downloaded": false
+}
