@@ -1,0 +1,19 @@
+{
+  "experiment": "SOIL-R02-CDF-20261110",
+  "author": "Francisco Angulo de Lafuente",
+  "ORCID": "0009-0001-1634-7063",
+  "configuration_count": 1,
+  "hypothesis": "A direct cumulative-target readout can reduce official cumulative-curve absolute error relative to square-root-bin-mass regression, on exactly the existing concatenated feature matrix.",
+  "input": "Exactly24 physical samples, existing2562 frozen training features and official11CDF training labels. No new feature extraction. No test file, array, prediction, CSV or score is accessed by evaluation.",
+  "control": "Original fold-local StandardScaler/Ridge(alpha1,lsqr), sqrt-bin-mass encoding and normalized squared positive-mass decoding. Recompute all100fits and match frozen20x24x11OOF within1e-10, baseline mean34.45786163217882 within1e-10.",
+  "candidate": "Identical fold-local StandardScaler/Ridge(alpha1,solverlsqr,otherdefaults pinnedruntime), train first ten percentage CDF coordinates directly. Per prediction, weighted-L2 isotonic regression using the10 official positive log10 diameter-interval weights, bounded0..100, then append100. No objective search, robust IRLS, blending or parameter tuning. Ridge remains squared-error regression; no claim of direct L1 optimization.",
+  "folds": "20 repeated physical-sample-level KFold(5,shuffleTrue,seeds20260925..20260944); train/heldout disjoint, eachsample heldout once perrepeat. No scaler/model/target fitting outsidefoldtraining.",
+  "metric": "Mean over24samples and20repeats of sum10 abs(trueCDF-predCDF)*diff(log10(supportMM)); range0..500, lowerbetter.",
+  "bootstrap": "First average paired control-minus-candidate loss across20repeats for each physicalsample; resample24sampleclusters withreplacement,10000draws, NumPydefault_rng seed20261110; percentile95CI.",
+  "fixed_gate": "Mean reduction>=1.0EMD AND lower95CI>0. Only one candidate; no posthocgate reduction. Failed result closesR02 and preserves existing officialbest. Passing is only a local exploratory gate, not test permission by itself.",
+  "test_policy": "No test feature/prediction/entry before the fixed gate, independent result review with new checks, and an actual JEV decision. The report always starts with test_permission_issuedFalse.",
+  "resource_limit": "CPU only, fourBLASthreads,10min process deadline, no GPU/localKagglejobs. Frozen source/input manifests checked before and after; exclusive output directory and lock, no optimizedPython.",
+  "prior_negatives": "PATCH/LARGE/ALL5VIEWS/SAM remain closed; exact inspected R02 concatenated-feature readout was not found. Old direct-CDF physical/Pavlo models are acknowledged rather than claimed as a novel modeling method.",
+  "limitations": "24 historically reused samples, previous model/feature/representation selection, overlapping trainingfolds and Android/iPhone domainshift. CI does not correct all historical selection or estimate an independent cohort; no official-score prediction, rank or win claim.",
+  "publication": "Code and aggregate results may be shared first on an associated Kaggle notebook underMIT, after separate final review, then additive GitHub/HF copies. No raw labels/images/features/sampleIDs/predictions/weights are public."
+}

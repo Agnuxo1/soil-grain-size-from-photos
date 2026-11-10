@@ -113,3 +113,19 @@ The archive includes the reproduction prerequisites and does not redistribute co
 ## Research update, 10 November 2026
 
 The SAM physical geometry comparison failed its unchanged prospective promotion gate. The existing official best is retained; no new test inference or competition submission was made. See the [experiment report](research/sam-20261110/README.md) for source, aggregate results, uncertainty and licences.
+
+
+## R02 direct-CDF readout audit (10 November 2026)
+
+A fixed training-only target-space ablation worsened exploratory EMD from
+34.4578616322 to37.4863959115. Control-minus-candidate is-3.0285342793,
+with a paired24-physical-sample95% interval[-5.4219109307,-0.5257701840].
+Both fixed gates failed; no test prediction or new competition entry was made.
+The same24samples have historical selection and camera-domain-shift limitations;
+this is not an independent-cohort or official-score result.
+
+[Exact source, method and limitations](research/r02-cdf-20261110/README.md),
+[source archive](research/r02-cdf-20261110/soil-r02-cdf-source-20261110.zip), and
+[associated Kaggle audit](https://www.kaggle.com/code/franciscoangulo/soil-gsd-audit-20261109-patch-large-all-views).
+Anonymous aggregate bootstrap replay is included; original images, labels,
+descriptors, identifiers, predictions and model weights are omitted.

@@ -1,0 +1,16 @@
+{
+  "independent_loop_metric_and_10000_cluster_bootstrap_replayed": true,
+  "baseline_mean_emd": 34.45786163217882,
+  "candidate_mean_emd": 37.48639591145215,
+  "mean_emd_reduction": -3.028534279273327,
+  "ci95": [
+    -5.4219109307360345,
+    -0.5257701840437061
+  ],
+  "gate_passed": false,
+  "valid_cdfs": true,
+  "pins_unchanged": true,
+  "official_submission_created": false,
+  "all_original_controls_100fits_reproduced": true,
+  "no_test_access": true
+}

@@ -1,0 +1,12 @@
+{
+  "sealed_utc": "2026-11-10T18:27:20.990052+00:00",
+  "source_members": 5,
+  "source_manifest_sha256": "473b9378136f7b491ae41ecf487f4dcd6996dbba96a24d902fd52567af22389d",
+  "candidate_evaluation_started": false,
+  "jev_design": {
+    "status": "connected",
+    "provenance": "jev",
+    "decision": "review_then_fixed_cdf_ablation",
+    "confidence": 0.82
+  }
+}

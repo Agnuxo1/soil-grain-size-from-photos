@@ -1,0 +1,36 @@
+{
+  "experiment": "SOIL-R02-CDF-20261110",
+  "files": {
+    "features.npy": {
+      "sha256": "9b2f2fac7966601256ab1cb0babd6dc718fa2dab395aa8339298f4430ba64124",
+      "bytes": 492032,
+      "original": "D:\\PROJECTS\\.cognition\\soil-rescue-20261109\\baseline-private\\train-features.npy"
+    },
+    "control_oof.npy": {
+      "sha256": "55cfe00ac737da5f654550c4fb41b2cc1af19ccdc2c6475e8c69ddf456104252",
+      "bytes": 42368,
+      "original": "D:\\PROJECTS\\.cognition\\soil-rescue-20261109\\baseline-private\\repeated-oof.npy"
+    },
+    "control_losses.npy": {
+      "sha256": "fd85ab6160faa322c2c8d678a4b6077d2565ab35a864768f8065899f9eeda2ed",
+      "bytes": 3968,
+      "original": "D:\\PROJECTS\\.cognition\\soil-rescue-20261109\\baseline-private\\per-sample-losses.npy"
+    },
+    "labels.csv": {
+      "sha256": "8ba8d3c22ad9157f76f086a7c3ff6b2f27aa3ce7abf1928241e940d3780df85a",
+      "bytes": 2074,
+      "original": "D:\\PROJECTS\\183_Machine_Learning\\data\\Training_labels_updated.csv"
+    }
+  },
+  "runtime": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1"
+  },
+  "control_source_sha256": "8260d5a00798b68b26f696ad060cb6b3c0d93273a5ee7d22dfe503beaef10d22",
+  "row_order_sha256": "44ea0bc0f1feb9f4f6b6e6d8890b856ab4a796a40eabd77a99f8b4fb40626ac3",
+  "target_order_sha256": "e117568c91b59d38759bdc36f66e7df3e54d1f364a881fcffcaaf4a58dbfad6d",
+  "baseline_mean_emd": 34.45786163217882,
+  "no_test_input_copied": true
+}

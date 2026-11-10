@@ -1,0 +1,16 @@
+{
+  "GOLDFISH_READINESS.md": "049cff250169771fa6fff894b971ca66a057bbec3eed4faf6f8bc5f57561dbf3",
+  "LICENSE": "cd17dec6267826a217dae561df3a190b356559da6f08dfc1e4aaee3e5b4505de",
+  "PREREGISTRATION.json": "1af040ebc3aec460725256c9552e079b2f23babd4cc0b5f17c0d560eccd0254f",
+  "README.md": "656f21c4ff36cbcc3151874694870fba365c75c685adfe2000d63842e538039c",
+  "replay.py": "9a7af4c158ad7f10d17d9aabcc35ecd87c29394dc7e6b33322c71969f7f0138e",
+  "RESULT.json": "c10cdd18df91564418dabb449f0b5019188bdcc7fc5a4acf083275b9fc4e006e",
+  "ROOT_VERIFICATION.json": "7857d9e4ead2b7f1398e78dc753fc8458e5f24cf573f221572d14b07ca06d89b",
+  "SKETCH.md": "4c81a1566b13f216b35cb2971e1b501d609ce68bd364e926fda6c25d356a9f0a",
+  "source/control.py": "8260d5a00798b68b26f696ad060cb6b3c0d93273a5ee7d22dfe503beaef10d22",
+  "source/evaluate.py": "b1884a3c1dbd7d03b62b06245fe63aa07abb702b46b40fa029bbb48b7684eadc",
+  "source/INPUTS.json": "4e8f35118d4a39e8cd03939dea479eb4069d46bc37fbd72c04f578160180b773",
+  "source/PROTOCOL.json": "dc29e2641aebffec2bf3a023df593e8ed50ebf2b40c46f9f0cbe1a15178dccae",
+  "source/readout.py": "1231134305ce65028179aa3c5a5a09567b29639cce6fddf280efe07a9ed7fdff",
+  "source/SOURCE_MANIFEST.json": "473b9378136f7b491ae41ecf487f4dcd6996dbba96a24d902fd52567af22389d"
+}
