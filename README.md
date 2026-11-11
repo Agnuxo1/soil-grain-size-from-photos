@@ -12,6 +12,10 @@ This repository contains a reproducible, CPU-friendly baseline for [Predicting S
 
 ![Feature pipeline](assets/feature-pipeline.png)
 
+<!-- impact-note:start -->
+<sub><strong>Efficiency and practical value.</strong> The CPU-friendly pipeline uses reusable image descriptors and lightweight regressors to study soil grain-size curves without requiring a large end-to-end image model. Physical output constraints and prospective comparison gates focus further work on candidates supported by validation. The <a href="#method">documented method</a> offers accessible screening and reproducible analysis; any reduction in laboratory work requires separate geotechnical validation.</sub>
+<!-- impact-note:end -->
+
 ## Method
 
 ![Project the cumulative grain-size curve. Illustrative values before and after a monotone correction](docs/figures/fig-01.gif)
